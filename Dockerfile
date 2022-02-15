@@ -13,7 +13,9 @@ RUN  wget https://sourceforge.net/projects/dependencies/files/vicon/ViconDataStr
         tar -xvf ViconDataStreamSDK_1.7.1_96542h.tar.xz
 
 
-RUN git clone https://github.com/frederico-klein/OpenSimRT.git /opensimrt
+#RUN git clone https://github.com/frederico-klein/OpenSimRT.git /opensimrt
+ADD OpenSimRT /opensimrt
+
 RUN sed 's@~@/opt@' /opensimrt/.github/workflows/env_variables >> /opensimrt/env.sh
 
 WORKDIR /opensimrt/build
@@ -35,11 +37,9 @@ RUN echo ". /opensimrt/env.sh && cmake ../ \
 	
 ENV LD_LIBRARY_PATH=/opt/dependencies/opensim-core/lib/:/opensimrt/build/
 
-RUN git pull && git checkout incdserv && bash build.sh && \
+RUN echo "git pull && git checkout sometimes_it_works && cd /opensimrt/build && bash build.sh" >> ~/.bash_history
 
-	echo "git pull && git checkout incdserv && cd /opensimrt/build && bash build.sh" >> ~/.bash_history
-
-RUN apt update && apt install vim python -y
+RUN apt update && apt install vim python gdb -y
 
 ADD  connect/ /opensimrt/connect/
 
