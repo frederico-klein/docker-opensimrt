@@ -1,0 +1,3 @@
+[submodule "OpenSimRT"]
+	path = OpenSimRT
+	url = git@github.com:frederico-klein/OpenSimRT.git
